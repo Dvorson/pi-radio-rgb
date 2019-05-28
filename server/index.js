@@ -5,6 +5,7 @@ import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
 
 import App from '../client/App';
 import theme from '../client/theme';
+import routes from './routing';
 
 function renderFullPage(html, css) {
   return `
@@ -48,6 +49,7 @@ const app = express();
 
 app.use('/static', express.static('./server/static'));
 app.use('/build', express.static('./build'));
+routes(app);
 
 // This is fired every time the server-side receives a request.
 app.use(handleRender);

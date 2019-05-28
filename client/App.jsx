@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Modal from '@material-ui/core/Modal';
-import { SketchPicker } from 'react-color';
+import { CirclePicker } from 'react-color';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +55,9 @@ export default function App() {
   const handleClose = () => {
     setOpen(false);
   };
+  const startRainbow = () => fetch('/api/startRainbow');
+  const turnLedOff = () => fetch('/api/turnOff');
+  const handleChangeColor = (color) => fetch(`/api/setColor/${color.hex.replace('#', '')}`);
   return (
     <Container className={classes.container}>
       <Grid container className={classes.root} spacing={2}>
@@ -188,11 +191,14 @@ export default function App() {
         <div className={classes.paper}>
             <Grid container className={classes.root} spacing={2}>
                 <Grid item xs={6}>
-                    <SketchPicker />
+                    <CirclePicker onChangeComplete={ handleChangeColor } />
                 </Grid>
                 <Grid item xs={6}>
-                    <Button className={classes.button} variant="contained" color="primary">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={startRainbow}>
                         Включить режим радуги
+                    </Button>
+                    <Button className={classes.button} variant="contained" color="secondary" onClick={turnLedOff}>
+                        Выключить освещение
                     </Button>
                 </Grid>
             </Grid>
