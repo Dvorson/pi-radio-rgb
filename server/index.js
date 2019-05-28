@@ -1,49 +1,7 @@
-import express from 'express';
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
+const express = require('express');
+const path = require('path');
 
-import App from '../client/App';
-import theme from '../client/theme';
-import routes from './routing';
-
-function renderFullPage(html, css) {
-  return `
-    <!DOCTYPE html>
-    <html lang="en" dir="ltr">
-      <head>
-        <title>My page</title>
-        <style id="jss-server-side">${css}</style>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <!-- Fonts to support Material Design -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" />
-      </head>
-      <body>
-        <script async src="build/bundle.js"></script>
-        <div id="root">${html}</div>
-      </body>
-    </html>
-  `;
-}
-
-function handleRender(req, res) {
-  const sheets = new ServerStyleSheets();
-
-  // Render the component to a string.
-  const html = ReactDOMServer.renderToString(
-    sheets.collect(
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>,
-    ),
-  );
-
-  // Grab the CSS from our sheets.
-  const css = sheets.toString();
-
-  // Send the rendered page back to the client.
-  res.send(renderFullPage(html, css));
-}
+const routes = require('./routing');
 
 const app = express();
 
@@ -52,6 +10,6 @@ app.use('/build', express.static('./build'));
 routes(app);
 
 // This is fired every time the server-side receives a request.
-app.use(handleRender);
+app.use((req, res) => res.sendFile(path.resolve('./server/views/index.html')));
 
-export const Server = app;
+module.exports = app;

@@ -1,9 +1,7 @@
-import { Server } from './server';
-import { config } from './config';
+const app = require('./server');
+const { port } = require('./config');
 
-const { port } = config;
-
-Server.listen(port, err => {
+app.listen(port, err => {
     if (err) return console.log(err);
     console.log(`Server is listening on port ${port}`);
 });
