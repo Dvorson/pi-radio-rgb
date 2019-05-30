@@ -1,10 +1,13 @@
 import React from 'react';
 
 export default function Player(props) {
-    const { streamUrl } = props;
+    const { streamUrls } = props;
+    // const audioCtx = new AudioContext();
     return (
-        <video controls={false} autoPlay={true} name="media">
-            <source src={streamUrl} type="audio/mpeg" />
-        </video>
+        <audio controls={false} autoPlay={true} name="media">
+            { streamUrls.map(({ streamUrl, contentType }) => (
+                <source src={streamUrl} type={contentType} />
+            )) }
+        </audio>
     );
 }

@@ -10,8 +10,6 @@ import { withStyles } from '@material-ui/styles';
 
 import Player from './Player';
 
-const getStations = () => fetch('/api/getRadioStations').then(res => res.json());
-
 const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
@@ -32,28 +30,22 @@ class RadioPicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            stations: [],
             isPlaying: false,
-            streamUrl: '',
+            streamUrls: [],
             isLoading: true
         };
     }
 
-    componentDidMount() {
-        getStations()
-            .then(stations => this.setState({ stations, isLoading: false }));
-    }
-
-    handleSelect = (streamUrl) => () => {
+    handleSelect = (streamUrls) => () => {
         this.setState({ isPlaying: false });
-        setTimeout(() => this.setState({ isPlaying: true, streamUrl }), 0);
+        setTimeout(() => this.setState({ isPlaying: true, streamUrls }), 0);
     }
 
-    renderStation = ({ title, logo, streamUrls: [stream] }) => {
+    renderStation = ({ title, logo, streamUrls }) => {
         const { classes } = this.props;
         return (
             <Grid item xs={3}>
-                <Card className={classes.card} onClick={this.handleSelect(stream.streamUrl)}>
+                <Card className={classes.card} onClick={this.handleSelect(streamUrls)}>
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}
@@ -73,13 +65,14 @@ class RadioPicker extends React.Component {
 
     render() {
 
-        const { classes } = this.props;
-        const { stations, isPlaying, streamUrl, isLoading } = this.state;
+        const { stations, classes } = this.props;
+        const { isPlaying, streamUrls } = this.state;
+        const isLoading = !Boolean(stations.length);
 
         return (
             <Grid container className={classes.root} spacing={2}>
                 { isLoading ? <CircularProgress /> : stations.map(station => this.renderStation(station)) }
-                { isPlaying && <Player streamUrl={streamUrl} /> }
+                { isPlaying && <Player streamUrls={streamUrls} /> }
             </Grid>
         );
     }

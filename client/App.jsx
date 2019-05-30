@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -12,7 +12,9 @@ import ModalContainer from './components/Modal';
 import ColorPicker from './components/ColorPicker';
 import RadioPicker from './components/RadioPicker';
 
-const useStyles = makeStyles((theme) => ({
+const getStations = () => fetch('/api/getRadioStations').then(res => res.json());
+
+const styles = (theme) => ({
   card: {
     maxWidth: 345,
   },
@@ -38,162 +40,185 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     margin: '16px 0'
   }
-}));
+});
 
-export default function App() {
+class App extends React.Component {
 
-  const classes = useStyles();
-  const [colorModalOpen, setColorModalOpen] = React.useState(false);
-  const [radioModalOpen, setRadioModalOpen] = React.useState(false);
+  constructor(props) {
+    super(props);
+    this.state = {
+      isColorModalOpen: false,
+      isRadioModalOpen: false,
+      stations: []
+    }
+  }
 
-  const handleColorModalOpen = () => {
-    setColorModalOpen(true);
-  };
-  const handleColorModalClose = () => {
-    setColorModalOpen(false);
-  };
+  componentDidMount() {
+    getStations().then(stations => this.setState({ stations }));
+  }
 
-  const handleRadioModalOpen = () => {
-    setRadioModalOpen(true);
-  };
-  const handleRadioModalClose = () => {
-    setRadioModalOpen(false);
-  };
-  
-  return (
-    <Container className={classes.container}>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="/static/img/Прозрачный-океан.jpg"
-                title="Ocean"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Океан
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+  handleColorModalOpen = () => this.setState({ isColorModalOpen: true })
+
+  handleColorModalClose = () => this.setState({ isColorModalOpen: false })
+
+  handleRadioModalOpen = () => this.setState({ isRadioModalOpen: true })
+
+  handleRadioModalClose = () => this.setState({ isRadioModalOpen: false })
+
+  render() {
+
+    const {
+      props,
+      state,
+      handleColorModalClose,
+      handleColorModalOpen,
+      handleRadioModalClose,
+      handleRadioModalOpen
+    } = this;
+    const { classes } = props;
+    const {
+      isColorModalOpen,
+      isRadioModalOpen,
+      stations
+    } = state;
+    
+    return (
+      <Container className={classes.container}>
+        <Grid container className={classes.root} spacing={2}>
+          <Grid item xs={12} sm={3}>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="/static/img/Прозрачный-океан.jpg"
+                  title="Ocean"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Океан
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="/static/img/Кения-сафари-в-Африке.jpg"
+                  title="Africa"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Африка
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="/static/img/166368.jpg"
+                  title="Desert"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Пустыня
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="/static/img/1504605947158114655.jpg"
+                  title="Forest"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Лес
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
         </Grid>
 
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="/static/img/Кения-сафари-в-Африке.jpg"
-                title="Africa"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Африка
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+        <Grid container className={classes.root} spacing={2}>
+          <Grid item xs={12} sm={4}>
+            <Card className={classes.card} onClick={handleColorModalOpen}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="/static/img/200px-Color_circle_(hue-sat).png"
+                  title="Color"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Свет
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <Card className={classes.card} onClick={handleRadioModalOpen}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="/static/img/icon.png"
+                  title="Radio"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Радио
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="/static/img/yt_1200-vfl4C3T0K.png"
+                  title="YouTube"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    YouTube
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
         </Grid>
 
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="/static/img/166368.jpg"
-                title="Desert"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Пустыня
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
+        <ModalContainer open={isColorModalOpen} handleClose={handleColorModalClose}>
+          <ColorPicker/>
+        </ModalContainer>
 
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="/static/img/1504605947158114655.jpg"
-                title="Forest"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Лес
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-      </Grid>
+        <ModalContainer open={isRadioModalOpen} handleClose={handleRadioModalClose}>
+          <RadioPicker stations={stations}/>
+        </ModalContainer>
 
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <Card className={classes.card} onClick={handleColorModalOpen}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="/static/img/200px-Color_circle_(hue-sat).png"
-                title="Color"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Свет
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={4}>
-          <Card className={classes.card} onClick={handleRadioModalOpen}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="/static/img/icon.png"
-                title="Radio"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  Радио
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} sm={4}>
-          <Card className={classes.card}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="/static/img/yt_1200-vfl4C3T0K.png"
-                title="YouTube"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  YouTube
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-
-      </Grid>
-
-      <ModalContainer open={colorModalOpen} handleClose={handleColorModalClose}>
-        <ColorPicker/>
-      </ModalContainer>
-
-      <ModalContainer open={radioModalOpen} handleClose={handleRadioModalClose}>
-        <RadioPicker/>
-      </ModalContainer>
-
-    </Container>
-  );
+      </Container>
+    );
+  }
 }
+
+export default withStyles(styles)(App);
