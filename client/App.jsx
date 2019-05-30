@@ -7,16 +7,17 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import Modal from '@material-ui/core/Modal';
-import { CirclePicker } from 'react-color';
-import Button from '@material-ui/core/Button';
+
+import ModalContainer from './components/Modal';
+import ColorPicker from './components/ColorPicker';
+import RadioPicker from './components/RadioPicker';
 
 const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: 345,
   },
   media: {
-    height: 140,
+    height: '19vh'
   },
   root: {
     backgroundColor: theme.palette.background.default,
@@ -25,16 +26,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.default,
     height: '99vh'
-  },
-  paper: {
-    position: 'absolute',
-    width: '80vw',
-    top: '10vh',
-    left: '10vw',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(4),
-    outline: 'none',
   },
   button: {
     display: 'block',
@@ -47,21 +38,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function App() {
+
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const [colorModalOpen, setColorModalOpen] = React.useState(false);
+  const [radioModalOpen, setRadioModalOpen] = React.useState(false);
+
+  const handleColorModalOpen = () => {
+    setColorModalOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleColorModalClose = () => {
+    setColorModalOpen(false);
   };
-  const startRainbow = () => fetch('/api/startRainbow');
-  const turnLedOff = () => fetch('/api/turnOff');
-  const handleChangeColor = (color) => fetch(`/api/setColor/${color.hex.replace('#', '')}`);
+
+  const handleRadioModalOpen = () => {
+    setRadioModalOpen(true);
+  };
+  const handleRadioModalClose = () => {
+    setRadioModalOpen(false);
+  };
+  
   return (
     <Container className={classes.container}>
       <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -78,7 +77,7 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -95,7 +94,7 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -112,7 +111,7 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -129,8 +128,8 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={3}>
-          <Card className={classes.card} onClick={handleOpen}>
+        <Grid item xs={12} sm={4}>
+          <Card className={classes.card} onClick={handleColorModalOpen}>
             <CardActionArea>
               <CardMedia
                 className={classes.media}
@@ -146,8 +145,8 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={3}>
-          <Card className={classes.card}>
+        <Grid item xs={12} sm={4}>
+          <Card className={classes.card} onClick={handleRadioModalOpen}>
             <CardActionArea>
               <CardMedia
                 className={classes.media}
@@ -163,7 +162,7 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -182,28 +181,13 @@ export default function App() {
 
       </Grid>
 
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-      >
-        <div className={classes.paper}>
-            <Grid container className={classes.root} spacing={2}>
-                <Grid item xs={6}>
-                    <CirclePicker onChangeComplete={ handleChangeColor } />
-                </Grid>
-                <Grid item xs={6}>
-                    <Button className={classes.button} variant="contained" color="primary" onClick={startRainbow}>
-                        Включить режим радуги
-                    </Button>
-                    <Button className={classes.button} variant="contained" color="secondary" onClick={turnLedOff}>
-                        Выключить освещение
-                    </Button>
-                </Grid>
-            </Grid>
-        </div>
-      </Modal>
+      <ModalContainer open={colorModalOpen} handleClose={handleColorModalClose}>
+        <ColorPicker/>
+      </ModalContainer>
+
+      <ModalContainer open={radioModalOpen} handleClose={handleRadioModalClose}>
+        <RadioPicker/>
+      </ModalContainer>
 
     </Container>
   );
