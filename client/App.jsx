@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     backgroundColor: theme.palette.background.default,
-    height: '99vh'
+    height: '99vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
   button: {
     display: 'block',
@@ -60,7 +63,7 @@ export default function App() {
   return (
     <Container className={classes.container}>
       <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -77,7 +80,7 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -94,7 +97,7 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -111,7 +114,7 @@ export default function App() {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
@@ -127,7 +130,9 @@ export default function App() {
             </CardActionArea>
           </Card>
         </Grid>
+      </Grid>
 
+      <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12} sm={4}>
           <Card className={classes.card} onClick={handleColorModalOpen}>
             <CardActionArea>
