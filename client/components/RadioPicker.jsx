@@ -10,6 +10,15 @@ import { withStyles } from '@material-ui/styles';
 
 import Player from './Player';
 
+const playStream = (streamUrl) => fetch('/api/playStream', {
+    method: 'POST',
+    body: JSON.stringify({ streamUrl }),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+}).then(res => res.json());
+
 const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
@@ -37,8 +46,9 @@ class RadioPicker extends React.Component {
     }
 
     handleSelect = (streamUrls) => () => {
-        this.setState({ isPlaying: false });
-        setTimeout(() => this.setState({ isPlaying: true, streamUrls }), 0);
+        // this.setState({ isPlaying: false });
+        // setTimeout(() => this.setState({ isPlaying: true, streamUrls }), 0);
+        playStream(streamUrls[0].streamUrl);
     }
 
     renderStation = ({ title, logo, streamUrls }) => {
