@@ -16,7 +16,7 @@ const styles = (theme) => ({
     padding: theme.spacing(4),
   },
   media: {
-      height: '175px'
+      height: '15vh'
   },
   title: {
     whiteSpace: 'nowrap',
@@ -44,7 +44,7 @@ class RadioPicker extends React.Component {
     renderStation = ({ title, logo, streamUrls }) => {
         const { classes } = this.props;
         return (
-            <Grid item xs={3}>
+            <Grid item xs={4}>
                 <Card className={classes.card} onClick={this.handleSelect(streamUrls)}>
                     <CardActionArea>
                         <CardMedia
