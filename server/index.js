@@ -10,6 +10,6 @@ app.use('/build', express.static('./build'));
 routes(app);
 
 // This is fired every time the server-side receives a request.
-app.use((req, res) => res.sendFile(path.resolve('./server/views/index.html')));
+app.use((req, res) => res.sendFile(path.resolve(__dirname, 'views/index.html')));
 
 module.exports = app;
