@@ -1,5 +1,6 @@
 const led = require("./routes/led");
-const radio = require('./routes/radio')
+const radio = require('./routes/radio');
+const { setModeRoute } = require('./routes/setMode');
 
 module.exports = function (app) {
     app.get("/api/startRainbow", led.startRainbowRoute);
@@ -8,4 +9,5 @@ module.exports = function (app) {
     app.get("/api/getRadioStations", radio.getLocalStationsRoute);
     app.post("/api/playStream", radio.playStreamRoute);
     app.get("/api/stopPlay", radio.stopPlayRoute);
+    app.get("/api/setMode/:mode", setModeRoute);
 }

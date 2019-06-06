@@ -17,6 +17,7 @@ import RadioPicker from './components/RadioPicker';
 
 const getStations = () => fetch('/api/getRadioStations').then(res => res.json());
 const turnRadioOff = () => fetch('/api/stopPlay');
+const setMode = (mode) => fetch(`/api/setMode/${mode}`);
 
 const styles = (theme) => ({
   card: {
@@ -71,6 +72,8 @@ class App extends React.Component {
 
   handleRadioModalClose = () => this.setState({ isRadioModalOpen: false })
 
+  handleModeSelect = (mode) => () => setMode(mode)
+
   handleRadioSelect = (stationName) => this.setState({
     isSnackBarOpen: true,
     snackBarMessage: `Сейчас играет: ${stationName}`
@@ -94,7 +97,8 @@ class App extends React.Component {
       handleRadioModalClose,
       handleRadioModalOpen,
       handleRadioSelect,
-      handleSnackBarClose
+      handleSnackBarClose,
+      handleModeSelect
     } = this;
     const { classes } = props;
     const {
@@ -109,7 +113,7 @@ class App extends React.Component {
       <Container className={classes.container}>
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={12} sm={3}>
-            <Card className={classes.card}>
+            <Card className={classes.card} onClick={handleModeSelect('ocean')}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -126,7 +130,7 @@ class App extends React.Component {
           </Grid>
 
           <Grid item xs={12} sm={3}>
-            <Card className={classes.card}>
+            <Card className={classes.card} onClick={handleModeSelect('africa')}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -143,7 +147,7 @@ class App extends React.Component {
           </Grid>
 
           <Grid item xs={12} sm={3}>
-            <Card className={classes.card}>
+            <Card className={classes.card} onClick={handleModeSelect('desert')}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -160,7 +164,7 @@ class App extends React.Component {
           </Grid>
 
           <Grid item xs={12} sm={3}>
-            <Card className={classes.card}>
+            <Card className={classes.card} onClick={handleModeSelect('forest')}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
