@@ -7,12 +7,16 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
+import Button from '@material-ui/core/Button';
 
 import ModalContainer from './components/Modal';
 import ColorPicker from './components/ColorPicker';
 import RadioPicker from './components/RadioPicker';
 
 const getStations = () => fetch('/api/getRadioStations').then(res => res.json());
+const turnRadioOff = () => fetch('/api/stopPlay');
 
 const styles = (theme) => ({
   card: {
@@ -49,6 +53,8 @@ class App extends React.Component {
     this.state = {
       isColorModalOpen: false,
       isRadioModalOpen: false,
+      isSnackBarOpen: false,
+      snackBarMessage: '',
       stations: []
     }
   }
@@ -65,6 +71,19 @@ class App extends React.Component {
 
   handleRadioModalClose = () => this.setState({ isRadioModalOpen: false })
 
+  handleRadioSelect = (stationName) => this.setState({
+    isSnackBarOpen: true,
+    snackBarMessage: `Сейчас играет: ${stationName}`
+  })
+
+  handleSnackBarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({ isSnackBarOpen: false });
+    turnRadioOff();
+  }
+
   render() {
 
     const {
@@ -73,12 +92,16 @@ class App extends React.Component {
       handleColorModalClose,
       handleColorModalOpen,
       handleRadioModalClose,
-      handleRadioModalOpen
+      handleRadioModalOpen,
+      handleRadioSelect,
+      handleSnackBarClose
     } = this;
     const { classes } = props;
     const {
       isColorModalOpen,
       isRadioModalOpen,
+      isSnackBarOpen,
+      snackBarMessage,
       stations
     } = state;
     
@@ -213,8 +236,27 @@ class App extends React.Component {
         </ModalContainer>
 
         <ModalContainer open={isRadioModalOpen} handleClose={handleRadioModalClose}>
-          <RadioPicker stations={stations}/>
+          <RadioPicker stations={stations} onPickRadio={handleRadioSelect}/>
         </ModalContainer>
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={isSnackBarOpen}
+          onClose={handleSnackBarClose}
+          TransitionComponent={Slide}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{ snackBarMessage }</span>}
+          action={[
+            <Button key="undo" color="secondary" size="small" onClick={handleSnackBarClose}>
+              Выключить
+            </Button>
+          ]}
+        />
 
       </Container>
     );

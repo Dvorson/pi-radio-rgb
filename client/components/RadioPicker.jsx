@@ -8,8 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/styles';
 
-import Player from './Player';
-
 const playStream = (streamUrl) => fetch('/api/playStream', {
     method: 'POST',
     body: JSON.stringify({ streamUrl }),
@@ -45,17 +43,16 @@ class RadioPicker extends React.Component {
         };
     }
 
-    handleSelect = (streamUrls) => () => {
-        // this.setState({ isPlaying: false });
-        // setTimeout(() => this.setState({ isPlaying: true, streamUrls }), 0);
+    handleSelect = (streamUrls, title) => () => {
         playStream(streamUrls[0].streamUrl);
+        this.props.onPickRadio(title);
     }
 
     renderStation = ({ title, logo, streamUrls }) => {
         const { classes } = this.props;
         return (
             <Grid item xs={4}>
-                <Card className={classes.card} onClick={this.handleSelect(streamUrls)}>
+                <Card className={classes.card} onClick={this.handleSelect(streamUrls, title)}>
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}
@@ -82,7 +79,6 @@ class RadioPicker extends React.Component {
         return (
             <Grid container className={classes.root} spacing={2}>
                 { isLoading ? <CircularProgress /> : stations.map(station => this.renderStation(station)) }
-                { isPlaying && <Player streamUrls={streamUrls} /> }
             </Grid>
         );
     }
