@@ -3,7 +3,7 @@ const path = require('path');
 const { playM3u } = require('../../lib/playAudio');
 const { startGradient } = require('../../lib/led'); 
 
-const resolvePath = (mode) => path.resolve(`server/static/sounds/${mode}.m3u`);
+const resolvePath = (mode) => path.resolve(__dirname, `../static/sounds/${mode}.m3u`);
 
 const colorMap = {
     africa: ['yellow', 'green', 'orange'],
