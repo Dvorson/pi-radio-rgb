@@ -16,6 +16,7 @@ import ColorPicker from './components/ColorPicker';
 import RadioPicker from './components/RadioPicker';
 
 const getStations = () => fetch('/api/getRadioStations').then(res => res.json());
+const updateStations = () => fetch('/api/updateRadioStations').then(res => res.json());
 const turnRadioOff = () => fetch('/api/stopPlay');
 const setMode = (mode) => fetch(`/api/setMode/${mode}`);
 
@@ -47,6 +48,13 @@ const styles = (theme) => ({
   }
 });
 
+const modeTranslationMap = {
+  africa: 'Африка',
+  desert: 'Пустыня',
+  forest: 'Лес',
+  ocean: 'Океан'
+}
+
 class App extends React.Component {
 
   constructor(props) {
@@ -72,9 +80,12 @@ class App extends React.Component {
 
   handleRadioModalClose = () => this.setState({ isRadioModalOpen: false })
 
-  handleModeSelect = (mode) => () => setMode(mode)
+  handleModeSelect = (mode) => () => {
+    setMode(mode);
+    this.handleAudioSelect(`Режим "${modeTranslationMap[mode]}"`);
+  }
 
-  handleRadioSelect = (stationName) => this.setState({
+  handleAudioSelect = (stationName) => this.setState({
     isSnackBarOpen: true,
     snackBarMessage: `Сейчас играет: ${stationName}`
   })
@@ -87,6 +98,11 @@ class App extends React.Component {
     turnRadioOff();
   }
 
+  handleStationsUpdate = () => {
+    this.setState({ stations: [] });
+    updateStations().then(stations => this.setState({ stations }));
+  }
+
   render() {
 
     const {
@@ -96,9 +112,10 @@ class App extends React.Component {
       handleColorModalOpen,
       handleRadioModalClose,
       handleRadioModalOpen,
-      handleRadioSelect,
+      handleAudioSelect,
       handleSnackBarClose,
-      handleModeSelect
+      handleModeSelect,
+      handleStationsUpdate
     } = this;
     const { classes } = props;
     const {
@@ -240,7 +257,11 @@ class App extends React.Component {
         </ModalContainer>
 
         <ModalContainer open={isRadioModalOpen} handleClose={handleRadioModalClose}>
-          <RadioPicker stations={stations} onPickRadio={handleRadioSelect}/>
+          <RadioPicker
+            stations={stations}
+            onPickRadio={handleAudioSelect}
+            onUpdateStations={handleStationsUpdate}
+          />
         </ModalContainer>
 
         <Snackbar

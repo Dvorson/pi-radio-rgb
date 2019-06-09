@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/styles';
 
 const playStream = (streamUrl) => fetch('/api/playStream', {
@@ -29,23 +30,24 @@ const styles = (theme) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis'
+  },
+  button: {
+      margin: '0 0 20px -8px'
+  },
+  progress: {
+    margin: theme.spacing(2)
   }
 });
 
 class RadioPicker extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isPlaying: false,
-            streamUrls: [],
-            isLoading: true
-        };
-    }
-
     handleSelect = (streamUrls, title) => () => {
         playStream(streamUrls[0].streamUrl);
         this.props.onPickRadio(title);
+    }
+
+    handleStationsUpdate = () => {
+        this.props.onUpdateStations();
     }
 
     renderStation = ({ title, logo, streamUrls }) => {
@@ -73,13 +75,17 @@ class RadioPicker extends React.Component {
     render() {
 
         const { stations, classes } = this.props;
-        const { isPlaying, streamUrls } = this.state;
-        const isLoading = !Boolean(stations.length);
+        const { isLoading } = !Boolean(stations.length);
 
         return (
-            <Grid container className={classes.root} spacing={2}>
-                { isLoading ? <CircularProgress /> : stations.map(station => this.renderStation(station)) }
-            </Grid>
+            <Fragment>
+                <Button className={classes.button} variant="contained" color="primary" onClick={this.handleStationsUpdate}>
+                    Обновить список станций
+                </Button>
+                <Grid container className={classes.root} spacing={2}>
+                    { isLoading ? <CircularProgress className={classes.progress} color="secondary" /> : stations.map(station => this.renderStation(station)) }
+                </Grid>
+            </Fragment>
         );
     }
 }
