@@ -29,7 +29,8 @@ const styles = (theme) => ({
   title: {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    fontSize: '1rem'
   },
   button: {
       margin: '0 0 20px -8px'

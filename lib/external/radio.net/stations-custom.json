@@ -1,0 +1,41 @@
+[
+    {
+        "streamUrls": [
+            {
+                "streamUrl": "http://strm112.1.fm/disco_mobile_mp3",
+                "loadbalanced": false,
+                "metaDataAvailable": true,
+                "playingMode": "STEREO",
+                "type": "STREAM",
+                "sampleRate": 44100,
+                "streamContentFormat": "MP3",
+                "bitRate": 192,
+                "idBroadcast": 1373,
+                "sortOrder": 0,
+                "streamFormat": "ICECAST",
+                "id": 72058,
+                "streamStatus": "VALID",
+                "contentType": "audio/mpeg"
+            },
+            {
+                "streamUrl": "http://strm112.1.fm/disco_mobile_aac",
+                "loadbalanced": false,
+                "metaDataAvailable": false,
+                "playingMode": "STEREO",
+                "type": "STREAM",
+                "sampleRate": 44100,
+                "streamContentFormat": "MP3",
+                "bitRate": 192,
+                "idBroadcast": 1373,
+                "sortOrder": 1,
+                "streamFormat": "ICECAST",
+                "id": 72092,
+                "streamStatus": "VALID",
+                "contentType": "audio/mpeg"
+            }
+        ],
+        "logo": "https://static.radio.net/images/broadcasts/e5/6b/1373/2/c175.png",
+        "title": "1.FM - Disco Ball 70's - 80's",
+        "subdomain": "1fmdiscoball"
+    }
+]

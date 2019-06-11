@@ -199,7 +199,10 @@ class App extends React.Component {
         </Grid>
 
         <Grid container className={classes.root} spacing={2}>
-          <Grid item xs={12} sm={4}>
+
+          <Grid item xs={12} sm={3}/>
+
+          <Grid item xs={12} sm={3}>
             <Card className={classes.card} onClick={handleColorModalOpen}>
               <CardActionArea>
                 <CardMedia
@@ -216,7 +219,7 @@ class App extends React.Component {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <Card className={classes.card} onClick={handleRadioModalOpen}>
               <CardActionArea>
                 <CardMedia
@@ -227,23 +230,6 @@ class App extends React.Component {
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
                     Радио
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={4}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image="/static/img/yt_1200-vfl4C3T0K.png"
-                  title="YouTube"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    YouTube
                   </Typography>
                 </CardContent>
               </CardActionArea>
