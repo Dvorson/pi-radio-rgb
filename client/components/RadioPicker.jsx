@@ -76,7 +76,7 @@ class RadioPicker extends React.Component {
     render() {
 
         const { stations, classes } = this.props;
-        const { isLoading } = !Boolean(stations.length);
+        const isLoading = !Boolean(stations.length);
 
         return (
             <Fragment>
