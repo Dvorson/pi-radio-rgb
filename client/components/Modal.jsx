@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
       left: '10vw',
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(4),
+      padding: theme.spacing(2),
       outline: 'none',
       overflowY: 'scroll'
     }

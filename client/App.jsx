@@ -45,6 +45,11 @@ const styles = (theme) => ({
   header: {
     maxWidth: '100%',
     margin: '16px 0'
+  },
+  spacer: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
+    }
   }
 });
 
@@ -129,7 +134,7 @@ class App extends React.Component {
     return (
       <Container className={classes.container}>
         <Grid container className={classes.root} spacing={2}>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={6} sm={3}>
             <Card className={classes.card} onClick={handleModeSelect('ocean')}>
               <CardActionArea>
                 <CardMedia
@@ -146,7 +151,7 @@ class App extends React.Component {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={6} sm={3}>
             <Card className={classes.card} onClick={handleModeSelect('africa')}>
               <CardActionArea>
                 <CardMedia
@@ -163,7 +168,7 @@ class App extends React.Component {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={6} sm={3}>
             <Card className={classes.card} onClick={handleModeSelect('desert')}>
               <CardActionArea>
                 <CardMedia
@@ -180,7 +185,7 @@ class App extends React.Component {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={6} sm={3}>
             <Card className={classes.card} onClick={handleModeSelect('forest')}>
               <CardActionArea>
                 <CardMedia
@@ -196,13 +201,10 @@ class App extends React.Component {
               </CardActionArea>
             </Card>
           </Grid>
-        </Grid>
 
-        <Grid container className={classes.root} spacing={2}>
+          <Grid item xs={6} sm={3} className={classes.spacer}/>
 
-          <Grid item xs={12} sm={3}/>
-
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={6} sm={3}>
             <Card className={classes.card} onClick={handleColorModalOpen}>
               <CardActionArea>
                 <CardMedia
@@ -219,7 +221,7 @@ class App extends React.Component {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={6} sm={3}>
             <Card className={classes.card} onClick={handleRadioModalOpen}>
               <CardActionArea>
                 <CardMedia

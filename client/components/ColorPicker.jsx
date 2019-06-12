@@ -1,5 +1,5 @@
 import React from 'react';
-import { CirclePicker } from 'react-color';
+import { HuePicker } from 'react-color';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     display: 'block',
     margin: theme.spacing(2),
+  },
+  colorPicker: {
+      width: 'auto'
   }
 }));
 
@@ -26,7 +29,7 @@ export default function ColorPicker(props) {
     return (
         <Grid container className={classes.root} spacing={2}>
             <Grid item xs={12} sm={6}>
-                <CirclePicker onChangeComplete={ handleChangeColor } />
+                <HuePicker onChangeComplete={handleChangeColor} width='auto' />
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Button className={classes.button} variant="contained" color="primary" onClick={startRainbow}>

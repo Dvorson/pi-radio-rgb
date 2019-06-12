@@ -54,7 +54,7 @@ class RadioPicker extends React.Component {
     renderStation = ({ title, logo, streamUrls }) => {
         const { classes } = this.props;
         return (
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4} >
                 <Card className={classes.card} onClick={this.handleSelect(streamUrls, title)}>
                     <CardActionArea>
                         <CardMedia
