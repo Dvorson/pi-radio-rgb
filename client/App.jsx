@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import ModalContainer from './components/Modal';
 import ColorPicker from './components/ColorPicker';
 import RadioPicker from './components/RadioPicker';
+import VolumeSlider from './components/VolumeSlider';
 
 const getStations = () => fetch('/api/getRadioStations').then(res => res.json());
 const updateStations = () => fetch('/api/updateRadioStations').then(res => res.json());
@@ -30,13 +31,20 @@ const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(4),
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(1)
+    }
   },
   container: {
     backgroundColor: theme.palette.background.default,
     height: '99vh',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: theme.spacing(4),
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(1)
+    }
   },
   button: {
     display: 'block',
@@ -263,7 +271,7 @@ class App extends React.Component {
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">{ snackBarMessage }</span>}
+          message={<span id="message-id">{ snackBarMessage } <VolumeSlider/> </span>}
           action={[
             <Button key="undo" color="secondary" size="small" onClick={handleSnackBarClose}>
               Выключить

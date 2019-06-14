@@ -1,6 +1,6 @@
 
 const { getLocalStations, updateStations } = require('../../lib/external/radio.net');
-const { playStream, stopPlay } = require('../../lib/playAudio');
+const { playStream, stopPlay, setVolume } = require('../../lib/playAudio');
 
 async function getLocalStationsRoute(req, res) {
     return res.json(await getLocalStations());
@@ -22,9 +22,16 @@ function stopPlayRoute(req, res) {
     return res.status(200).send('OK');
 }
 
+function setVolumeRoute(req, res) {
+    const { volume } = req.query;
+    setVolume(volume);
+    return res.status(200).send('OK');
+}
+
 module.exports = {
     getLocalStationsRoute,
     updateStationsRoute,
     playStreamRoute,
-    stopPlayRoute
+    stopPlayRoute,
+    setVolumeRoute
 }

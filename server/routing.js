@@ -10,5 +10,6 @@ module.exports = function (app) {
     app.get('/api/updateRadioStations', radio.updateStationsRoute);
     app.post('/api/playStream', radio.playStreamRoute);
     app.get('/api/stopPlay', radio.stopPlayRoute);
+    app.get('/api/setVolume', radio.setVolumeRoute);
     app.get('/api/setMode/:mode', setModeRoute);
 }
