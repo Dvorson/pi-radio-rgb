@@ -20,6 +20,7 @@ const getStations = () => fetch('/api/getRadioStations').then(res => res.json())
 const updateStations = () => fetch('/api/updateRadioStations').then(res => res.json());
 const turnRadioOff = () => fetch('/api/stopPlay');
 const setMode = (mode) => fetch(`/api/setMode/${mode}`);
+const shutdown = () => fetch('/api/shutdown');
 
 const styles = (theme) => ({
   card: {
@@ -116,6 +117,10 @@ class App extends React.Component {
     updateStations().then(stations => this.setState({ stations }));
   }
 
+  handleShutdown = () => {
+    shutdown();
+  }
+
   render() {
 
     const {
@@ -128,7 +133,8 @@ class App extends React.Component {
       handleAudioSelect,
       handleSnackBarClose,
       handleModeSelect,
-      handleStationsUpdate
+      handleStationsUpdate,
+      handleShutdown
     } = this;
     const { classes } = props;
     const {
@@ -141,6 +147,9 @@ class App extends React.Component {
     
     return (
       <Container className={classes.container}>
+        <Button key="shutdown" color="secondary" size="large" onClick={handleShutdown}>
+          Выключить
+        </Button>
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={6} sm={3}>
             <Card className={classes.card} onClick={handleModeSelect('ocean')}>
