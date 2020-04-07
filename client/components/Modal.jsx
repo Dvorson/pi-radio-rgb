@@ -4,16 +4,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
+      display: 'flex',
+      flexDirection: 'column',
       position: 'absolute',
-      width: '80vw',
-      maxHeight: '80vh',
-      top: '10vh',
-      left: '10vw',
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
       outline: 'none',
-      overflowY: 'scroll'
     }
 }));
 
@@ -30,7 +27,7 @@ export default function ModalContainer(props) {
             onClose={handleClose}
         >
             <div className={classes.paper}>
-                {children}
+                { children }
             </div>
         </Modal>
     )

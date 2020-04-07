@@ -147,9 +147,6 @@ class App extends React.Component {
     
     return (
       <Container className={classes.container}>
-        <Button key="shutdown" color="secondary" size="large" onClick={handleShutdown}>
-          Выключить
-        </Button>
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={6} sm={3}>
             <Card className={classes.card} onClick={handleModeSelect('ocean')}>
@@ -266,12 +263,13 @@ class App extends React.Component {
             stations={stations}
             onPickRadio={handleAudioSelect}
             onUpdateStations={handleStationsUpdate}
+            handleClose={handleRadioModalClose}
           />
         </ModalContainer>
 
         <Snackbar
           anchorOrigin={{
-            vertical: 'top',
+            vertical: 'bottom',
             horizontal: 'right',
           }}
           open={isSnackBarOpen}
@@ -283,7 +281,7 @@ class App extends React.Component {
           message={<span id="message-id">{ snackBarMessage } <VolumeSlider/> </span>}
           action={[
             <Button key="undo" color="secondary" size="small" onClick={handleSnackBarClose}>
-              Выключить
+              Стоп
             </Button>
           ]}
         />
