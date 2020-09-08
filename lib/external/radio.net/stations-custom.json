@@ -37,5 +37,28 @@
         "logo": "https://static.radio.net/images/broadcasts/e5/6b/1373/2/c175.png",
         "title": "1.FM - Disco Ball 70's - 80's",
         "subdomain": "1fmdiscoball"
+    },
+    {
+        "logo": "https://static.radio.net/images/broadcasts/de/b9/11009/c175.png",
+        "title": "Business FM 107.4",
+        "subdomain": "businessfm1074",
+        "streamUrls": [
+            {
+                "streamUrl": "https://stream.bfmspb.ru:8000/live",
+                "loadbalanced": false,
+                "metaDataAvailable": false,
+                "playingMode": "STEREO",
+                "type": "STREAM",
+                "sampleRate": 44100,
+                "streamContentFormat": "MP3",
+                "bitRate": 128,
+                "idBroadcast": 11009,
+                "sortOrder": 0,
+                "streamFormat": "UNKNOWN",
+                "id": 102501,
+                "streamStatus": "VALID",
+                "contentType": "audio/mpeg"
+            }
+        ]
     }
 ]
