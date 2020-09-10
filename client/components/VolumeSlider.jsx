@@ -12,7 +12,7 @@ const DEFAULT_VOLUME = 80;
 
 const useStyles = makeStyles({
   root: {
-    width: 200,
+    width: '80vw',
   },
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { HuePicker } from 'react-color';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,47 +10,54 @@ const handleChangeColor = (color) => fetch(`/api/setColor/${color.hex.replace('#
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    top: '30vh',
-    width: '100vw',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(4),
+    padding: theme.spacing(1),
+    margin: 0,
+    width: 'calc(100vw - 16px)',
+    height: 'calc(100vh - 60px)',
     [theme.breakpoints.down('xs')]: {
       padding: theme.spacing(1)
     }
   },
-  button: {
-    display: 'block',
-    margin: theme.spacing(2),
-  },
   colorPicker: {
-      width: '50vw'
+    width: '80vw',
+    margin: '10vh'
   },
   actions: {
-    display: 'flex',
-    flexDirection: 'column'
+    marginBottom: theme.spacing(1)
+  },
+  button: {
+    display: 'block',
+    margin: 'auto'
   }
 }));
 
-export default function ColorPicker(props) {
+export default function ColorPicker({ handleClose }) {
 
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
-        <Grid container className={classes.root} spacing={2}>
-            <Grid item xs={12} sm={6} className={classes.colorPicker}>
-                <HuePicker onChangeComplete={handleChangeColor} width='auto' />
-            </Grid>
-            <Grid item xs={12} sm={6} className={classes.actions}>
-                <Button className={classes.button} variant="contained" color="primary" onClick={startRainbow}>
-                    Включить режим радуги
-                </Button>
-                <Button className={classes.button} variant="contained" color="secondary" onClick={turnLedOff}>
-                    Выключить освещение
-                </Button>
-            </Grid>
+  return (
+    <Fragment>
+      <div className={classes.actions}>
+        <Button variant="contained" color="primary" onClick={handleClose}>
+          Закрыть
+        </Button>
+      </div>
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item xs={12} sm={12} className={classes.colorPicker}>
+          <HuePicker onChangeComplete={handleChangeColor} width='auto' />
         </Grid>
-    );
+        <Grid item xs={12} sm={6}>
+          <Button className={classes.button} variant="contained" color="primary" onClick={startRainbow}>
+            Включить режим радуги
+          </Button>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Button className={classes.button} variant="contained" color="secondary" onClick={turnLedOff}>
+            Выключить освещение
+          </Button>
+        </Grid>
+      </Grid>
+    </Fragment>
+  );
 }

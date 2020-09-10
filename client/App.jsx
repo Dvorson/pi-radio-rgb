@@ -255,7 +255,7 @@ class App extends React.Component {
         </Grid>
 
         <ModalContainer open={isColorModalOpen} handleClose={handleColorModalClose}>
-          <ColorPicker/>
+          <ColorPicker handleClose={handleColorModalClose}/>
         </ModalContainer>
 
         <ModalContainer open={isRadioModalOpen} handleClose={handleRadioModalClose}>
@@ -270,7 +270,7 @@ class App extends React.Component {
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'right',
+            horizontal: 'center',
           }}
           open={isSnackBarOpen}
           onClose={handleSnackBarClose}
