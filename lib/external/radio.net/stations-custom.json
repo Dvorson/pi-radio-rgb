@@ -60,5 +60,28 @@
                 "contentType": "audio/mpeg"
             }
         ]
+    },
+    {
+        "logo": "https://static.radio.net/images/broadcasts/f8/41/7526/c175.png",
+        "title": "Monte Carlo 105.9 FM",
+        "subdomain": "montecarloru",
+        "streamUrls": [
+            {
+                "streamUrl": "https://icecast227.ptspb.ru:8443/monte",
+                "loadbalanced": false,
+                "metaDataAvailable": false,
+                "playingMode": "STEREO",
+                "type": "STREAM",
+                "sampleRate": 44100,
+                "streamContentFormat": "MP3",
+                "bitRate": 128,
+                "idBroadcast": 7526,
+                "sortOrder": 0,
+                "streamFormat": "UNKNOWN",
+                "id": 98659,
+                "streamStatus": "VALID",
+                "contentType": "audio/mpeg"
+            }
+        ]
     }
 ]
