@@ -1,17 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { HuePicker } from 'react-color';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-
-let currentColor = { hex: {} };
+import tinycolor from 'tinycolor2';
 
 const startRainbow = () => fetch('/api/startRainbow');
 const turnLedOff = () => fetch('/api/turnOff');
-const handleChange = color => {
-  fetch(`/api/setColor/${color.hex.replace('#', '')}`);
-  currentColor = color;
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
 export default function ColorPicker({ handleClose }) {
 
   const classes = useStyles();
+  const [color, setColor] = useState(tinycolor('#000'));
+
+  const handleChange = nextColor => {
+    fetch(`/api/setColor/${nextColor.hex.replace('#', '')}`);
+    setColor(nextColor);
+  }
 
   return (
     <Fragment>
@@ -50,7 +51,7 @@ export default function ColorPicker({ handleClose }) {
       </div>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12} sm={12} className={classes.colorPicker}>
-          <HuePicker onChangeComplete={handleChange} color={ currentColor.hex } width='auto' height='50px'/>
+          <HuePicker onChangeComplete={handleChange} color={color} width='auto' height='50px'/>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Button className={classes.button} variant="contained" color="primary" onClick={startRainbow}>
