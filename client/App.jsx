@@ -10,12 +10,16 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
 import Button from '@material-ui/core/Button';
+import { debounce } from 'lodash';
 
 import ModalContainer from './components/Modal';
 import ColorPicker from './components/ColorPicker';
 import RadioPicker from './components/RadioPicker';
 import VolumeSlider from './components/VolumeSlider';
 
+import { defaultVolume } from '../config';
+
+const setVolume = debounce((volume) => fetch(`/api/setVolume?volume=${volume}`), 100);
 const getStations = () => fetch('/api/getRadioStations').then(res => res.json());
 const updateStations = () => fetch('/api/updateRadioStations').then(res => res.json());
 const turnRadioOff = () => fetch('/api/stopPlay');
@@ -78,6 +82,7 @@ class App extends React.Component {
       isRadioModalOpen: false,
       isSnackBarOpen: false,
       snackBarMessage: '',
+      volume: defaultVolume,
       stations: []
     }
   }
@@ -110,11 +115,17 @@ class App extends React.Component {
     }
     this.setState({ isSnackBarOpen: false });
     turnRadioOff();
+    this.handleSetVolume(null, defaultVolume);
   }
 
   handleStationsUpdate = () => {
     this.setState({ stations: [] });
     updateStations().then(stations => this.setState({ stations }));
+  }
+
+  handleSetVolume = (e, volume) => {
+    setVolume(volume);
+    this.setState({ volume });
   }
 
   handleShutdown = () => {
@@ -133,8 +144,7 @@ class App extends React.Component {
       handleAudioSelect,
       handleSnackBarClose,
       handleModeSelect,
-      handleStationsUpdate,
-      handleShutdown
+      handleStationsUpdate
     } = this;
     const { classes } = props;
     const {
@@ -142,7 +152,8 @@ class App extends React.Component {
       isRadioModalOpen,
       isSnackBarOpen,
       snackBarMessage,
-      stations
+      stations,
+      volume
     } = state;
     
     return (
@@ -278,7 +289,7 @@ class App extends React.Component {
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">{ snackBarMessage } <VolumeSlider/> </span>}
+          message={<span id="message-id">{ snackBarMessage } <VolumeSlider setVolume={ this.handleSetVolume } volume={ volume }/> </span>}
           action={[
             <Button key="undo" color="secondary" size="small" onClick={handleSnackBarClose}>
               Стоп

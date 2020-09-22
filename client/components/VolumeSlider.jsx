@@ -5,10 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
-import { debounce } from 'lodash';
-import { defaultVolume } from '../../config';
-
-const setVolume = debounce((volume) => fetch(`/api/setVolume?volume=${volume}`), 100);
 
 const useStyles = makeStyles({
   root: {
@@ -16,14 +12,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ContinuousSlider() {
+export default function ContinuousSlider({ setVolume, volume }) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(defaultVolume);
-
-  const handleChange = (event, newValue) => {
-    setVolume(newValue);
-    setValue(newValue);
-  };
+  console.log({ volume });
 
   return (
     <div className={classes.root}>
@@ -35,7 +26,7 @@ export default function ContinuousSlider() {
           <VolumeDown />
         </Grid>
         <Grid item xs>
-          <Slider value={value} onChange={handleChange} aria-labelledby="continuous-slider" />
+          <Slider value={volume} onChange={setVolume} aria-labelledby="continuous-slider" />
         </Grid>
         <Grid item>
           <VolumeUp />
