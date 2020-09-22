@@ -6,9 +6,9 @@ import Slider from '@material-ui/core/Slider';
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import { debounce } from 'lodash';
+import { defaultVolume } from '../../config';
 
 const setVolume = debounce((volume) => fetch(`/api/setVolume?volume=${volume}`), 100);
-const DEFAULT_VOLUME = 80;
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 export default function ContinuousSlider() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(DEFAULT_VOLUME);
+  const [value, setValue] = React.useState(defaultVolume);
 
   const handleChange = (event, newValue) => {
     setVolume(newValue);
